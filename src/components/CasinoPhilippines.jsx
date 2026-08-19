@@ -1,647 +1,985 @@
-import React, { useState } from 'react';
-import { Star, Shield, Award, Search, Calendar, User, Tag, ArrowRight } from 'lucide-react';
+import React, { useMemo, useState } from "react";
+import {
+  Award,
+  BadgeCheck,
+  BookOpen,
+  ChevronRight,
+  CircleDollarSign,
+  ExternalLink,
+  Gift,
+  Globe2,
+  Home,
+  Menu,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Trophy,
+  X,
+} from "lucide-react";
 
-export default function CasinoReviewPH() {
-  const [selectedCategory, setSelectedCategory] = useState('lahat');
-  const [searchTerm, setSearchTerm] = useState('');
+const casinos = [
+  {
+    id: 1,
+    name: "1WIN",
+    rating: 4.9,
+    score: 98,
+    category: ["premium", "popular", "trusted"],
+    bonus: "Hanggang 500% Bonus",
+    bonusDetails: "Malaking welcome bonus package para sa mga bagong manlalaro.",
+    currency: "USD",
+    description:
+      "Isang sikat na international gaming platform na may casino games, live dealer titles, at mabilis na mobile experience.",
+    features: [
+      "Malaking welcome bonus",
+      "Live casino games",
+      "Mobile-friendly platform",
+      "Maraming pagpipiliang laro",
+    ],
+    link: "https://lkmn.cc/dc546c",
+    badge: "Pinakamahusay",
+    featured: true,
+  },
+  {
+    id: 2,
+    name: "Melbet",
+    rating: 4.8,
+    score: 96,
+    category: ["premium", "popular", "trusted"],
+    bonus: "100% Deposit Bonus",
+    bonusDetails:
+      "Welcome deposit promotion para sa mga kwalipikadong bagong account.",
+    currency: "USD",
+    description:
+      "Established international platform na may online casino, slots, table games, at live dealer selection.",
+    features: [
+      "100% deposit bonus",
+      "Live dealer casino",
+      "Malawak na game selection",
+      "Responsive mobile website",
+    ],
+    link: "https://refpa18631.com/L?tag=d_5984966m_59717c_home&site=5984966&ad=59717",
+    badge: "Popular",
+    featured: true,
+  },
+  {
+    id: 3,
+    name: "PinoyPlay Casino",
+    rating: 4.6,
+    score: 92,
+    category: ["popular", "trusted"],
+    bonus: "Welcome Rewards",
+    bonusDetails: "Promotional rewards para sa mga bagong miyembro.",
+    currency: "PHP",
+    description:
+      "Isang sample casino listing para ipakita ang ranking at comparison layout ng Casino Philippines Pro.",
+    features: [
+      "PHP-friendly",
+      "Mobile access",
+      "Slots at table games",
+      "Simple registration",
+    ],
+    link: "#",
+    badge: "Trusted",
+    featured: false,
+    demo: true,
+  },
+  {
+    id: 4,
+    name: "Manila Spins",
+    rating: 4.5,
+    score: 90,
+    category: ["popular"],
+    bonus: "New Player Bonus",
+    bonusDetails: "Promotional package para sa bagong players.",
+    currency: "PHP",
+    description:
+      "Sample listing para sa casino comparison section ng website.",
+    features: [
+      "Mobile optimized",
+      "Casino slots",
+      "Game categories",
+      "Player promotions",
+    ],
+    link: "#",
+    badge: "Popular",
+    featured: false,
+    demo: true,
+  },
+];
+
+const articles = [
+  {
+    id: "paano-pumili-online-casino-philippines",
+    title: "Paano Pumili ng Online Casino sa Pilipinas sa 2026",
+    excerpt:
+      "Alamin ang mahahalagang bagay na dapat tingnan bago pumili ng online casino, mula sa seguridad hanggang sa bonus terms at payment methods.",
+    date: "2026-08-18",
+    readTime: "6 minutong basa",
+    content: [
+      {
+        heading: "Hindi lang bonus ang dapat tingnan",
+        text:
+          "Maraming manlalaro ang unang tumitingin sa laki ng welcome bonus. Mahalaga ito, pero hindi ito dapat ang tanging basehan. Tingnan din ang reputasyon ng platform, kalidad ng mga laro, payment options, customer support, at ang mga kondisyon ng bawat promotion.",
+      },
+      {
+        heading: "Basahin ang bonus terms",
+        text:
+          "Bago mag-deposito, suriin ang wagering requirements, minimum deposit, maximum withdrawal restrictions, eligible games, at expiration period ng promotion. Ang malaking bonus ay maaaring hindi praktikal kung napakahirap ng requirements.",
+      },
+      {
+        heading: "Mobile experience",
+        text:
+          "Maraming Filipino players ang gumagamit ng smartphone, kaya mahalagang mabilis at madaling gamitin ang casino sa mobile. Tingnan kung responsive ang website at kung madaling ma-access ang slots, live casino, cashier, at account settings.",
+      },
+      {
+        heading: "Responsible gambling",
+        text:
+          "Tratuhin ang casino bilang entertainment at hindi bilang paraan para kumita ng garantisadong income. Magtakda ng malinaw na budget at huwag habulin ang pagkatalo.",
+      },
+    ],
+  },
+  {
+    id: "casino-bonus-guide-pilipinas",
+    title: "Online Casino Bonus Guide para sa Filipino Players",
+    excerpt:
+      "Ano ba talaga ang ibig sabihin ng 100%, 200%, o 500% casino bonus? Narito ang simpleng gabay bago ka mag-claim.",
+    date: "2026-08-18",
+    readTime: "5 minutong basa",
+    content: [
+      {
+        heading: "Ano ang deposit bonus?",
+        text:
+          "Ang deposit bonus ay karaniwang promotional credit na nakabase sa halaga ng iyong kwalipikadong deposit. Halimbawa, ang 100% bonus ay maaaring tumbasan ang deposit hanggang sa nakasaad na maximum promotional amount.",
+      },
+      {
+        heading: "Ano ang wagering requirement?",
+        text:
+          "Ito ang requirement kung ilang beses kailangang ma-play ang bonus o qualifying balance bago maging eligible ang ilang withdrawals. Iba-iba ang rules sa bawat operator kaya kailangang basahin ang eksaktong terms.",
+      },
+      {
+        heading: "Mas malaking bonus ba ay mas mahusay?",
+        text:
+          "Hindi palagi. Mas mahalagang ikumpara ang maximum bonus, wagering requirement, game contribution, expiration period, at withdrawal restrictions kaysa tumingin lamang sa headline percentage.",
+      },
+      {
+        heading: "Tip para sa beginners",
+        text:
+          "Huwag mag-deposito nang higit sa iyong normal na entertainment budget dahil lamang sa promotional offer. Pumili ng promotion na naiintindihan mo ang lahat ng kondisyon.",
+      },
+    ],
+  },
+  {
+    id: "live-casino-slots-philippines",
+    title: "Live Casino o Slots: Ano ang Mas Bagay sa Iyo?",
+    excerpt:
+      "Ikumpara ang live dealer casino at online slots para malaman kung anong gaming experience ang mas angkop sa iyong preference.",
+    date: "2026-08-18",
+    readTime: "4 minutong basa",
+    content: [
+      {
+        heading: "Live casino",
+        text:
+          "Ang live casino ay naglalayong gayahin ang atmosphere ng physical casino gamit ang real-time video stream at live dealers. Karaniwang available ang blackjack, roulette, baccarat, at game-show style titles.",
+      },
+      {
+        heading: "Online slots",
+        text:
+          "Mas mabilis at mas simple ang slots para sa maraming casual players. Maraming themes, paylines, volatility levels, at bonus mechanics ang available depende sa game provider.",
+      },
+      {
+        heading: "Alin ang dapat piliin?",
+        text:
+          "Kung gusto mo ng social at interactive experience, maaaring mas interesting ang live casino. Kung gusto mo naman ng mabilis na gameplay at maraming themes, maaaring mas bagay ang slots.",
+      },
+      {
+        heading: "Tandaan ang budget",
+        text:
+          "Anuman ang game type, mahalagang magtakda ng spending limit at ituring ang paglalaro bilang entertainment.",
+      },
+    ],
+  },
+];
+
+const categories = [
+  { id: "all", label: "Lahat" },
+  { id: "premium", label: "Premium" },
+  { id: "popular", label: "Sikat" },
+  { id: "trusted", label: "Pinagkakatiwalaan" },
+];
+
+function StarRating({ rating }) {
+  return (
+    <div className="flex items-center gap-1">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          size={16}
+          className={
+            star <= Math.round(rating)
+              ? "fill-yellow-400 text-yellow-400"
+              : "text-slate-300"
+          }
+        />
+      ))}
+      <span className="ml-1 text-sm font-bold text-slate-800">
+        {rating.toFixed(1)}
+      </span>
+    </div>
+  );
+}
+
+export default function CasinoPhilippines() {
+  const [page, setPage] = useState("home");
+  const [category, setCategory] = useState("all");
   const [selectedCasino, setSelectedCasino] = useState(null);
-  const [currentPage, setCurrentPage] = useState('home');
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [mobileMenu, setMobileMenu] = useState(false);
 
-  const casinos = [
-    {
-      id: 1,
-      pangalan: 'Bet365 Pilipinas',
-      rating: 4.9,
-      reviews: 3156,
-      category: 'premium',
-      bonus: 'Hanggang ₱50,000 Bonus',
-      features: ['Lisensya Malta', 'Suporta Pilipinas', 'Mabilis na Payout'],
-      image: '🎰',
-      description: 'Nangungunang platform sa online betting sa Pilipinas na may pinakamalawak na koleksyon ng laro.',
-      providers: ['Pragmatic Play', 'NetEnt', 'Evolution Gaming']
-    },
-    {
-      id: 2,
-      pangalan: 'LeoVegas Pilipinas',
-      rating: 4.8,
-      reviews: 2734,
-      category: 'mapagkakatiwalaan',
-      bonus: 'Hanggang ₱30,000 + 100 Free Spins',
-      features: ['Lisensya Curacao', 'Mobile Friendly', 'Weekly Promos'],
-      image: '🎲',
-      description: 'Mapagkakatiwalaang casino platform na may suporta sa Filipino at local payment methods.',
-      providers: ['Pragmatic Play', 'Play\'n GO', 'Isoftbet']
-    },
-    {
-      id: 3,
-      pangalan: 'Royal Fortune PH',
-      rating: 4.7,
-      reviews: 2456,
-      category: 'mapagkakatiwalaan',
-      bonus: 'Hanggang ₱40,000 + 80 Free Spins',
-      features: ['Lisensya Gibraltar', 'Local Support', 'OFW Friendly'],
-      image: '👑',
-      description: 'Premium casino na may international license at dedicated support para sa Filipino players.',
-      providers: ['Pragmatic Play', 'Evolution Gaming', 'Big Time Gaming']
-    },
-    {
-      id: 4,
-      pangalan: 'Spin Manila',
-      rating: 4.6,
-      reviews: 1987,
-      category: 'popular',
-      bonus: 'Hanggang ₱25,000 + 50 Free Spins',
-      features: ['Mobile App', 'Weekly Tournaments', 'VIP Program'],
-      image: '🌟',
-      description: 'Casino na may weekly tournaments at active community ng Filipino players.',
-      providers: ['Pragmatic Play', 'Red Tiger', 'Yggdrasil']
-    },
-    {
-      id: 5,
-      pangalan: 'Diamond Casino PH',
-      rating: 4.9,
-      reviews: 3342,
-      category: 'premium',
-      bonus: 'Hanggang ₱60,000 Bonus',
-      features: ['Lisensya Malta', 'Cryptocurrency', 'Instant Payout'],
-      image: '💎',
-      description: 'Pinaka-mapagkakatiwalaang casino na may pinakamabilis na system ng pagbabayad.',
-      providers: ['Pragmatic Play', 'NetEnt', 'Evolution Gaming']
-    },
-    {
-      id: 6,
-      pangalan: 'Phoenix Slots',
-      rating: 4.5,
-      reviews: 1654,
-      category: 'mapagkakatiwalaan',
-      bonus: 'Hanggang ₱20,000 + 150 Free Spins',
-      features: ['Walang Verification', 'Mabilis na Withdrawals', 'Maraming Slots'],
-      image: '🎯',
-      description: 'Casino na nakatuon sa slot games na may generous bonuses at mabilis na payout.',
-      providers: ['Pragmatic Play', 'Slot Thunder', 'PG Soft']
-    }
-  ];
+  const filteredCasinos = useMemo(() => {
+    if (category === "all") return casinos;
+    return casinos.filter((casino) => casino.category.includes(category));
+  }, [category]);
 
-  const blogArticles = [
-    {
-      id: 1,
-      title: 'Kumpleto Gabay: Paano Pumili ng Mapagkakatiwalaang Online Casino sa Pilipinas 2024',
-      slug: 'gabay-pumili-casino-mapagkakatiwalaan',
-      excerpt: 'Matuto kung paano makilala ang ligtas at mapagkakatiwalaang online casinos sa Pilipinas.',
-      content: `Ang pagpili ng tamang online casino ay mahalagang hakbang tungo sa ligtas at masayang karanasan. Sa maraming opsyon, mahalaga ang malaman kung ano ang dapat paghanap.
+  const navigate = (destination) => {
+    setPage(destination);
+    setSelectedArticle(null);
+    setMobileMenu(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-Pagsusuri ng Lisensya at Regulasyon
-Ang mga mapagkakatiwalaang online casino ay dapat may lisensya mula sa international authorities tulad ng Malta, Gibraltar o Curacao. Ang lisensya na ito ay nagpapakita na ang casino ay sumusunod sa pinakamataas na security standards.
+  const openArticle = (article) => {
+    setSelectedArticle(article);
+    setPage("article");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-Lokal na Paraan ng Pagbabayad
-Pumili ng casino na sumusuporta sa local Filipino payment methods tulad ng bank transfer, e-wallet at GCash. Ginagawang mas madali at mabilis ang mga transaksyon.
-
-Filipino Customer Support
-Ang pinakamahusay na casino ay nag-aalok ng 24/7 support sa Filipino through live chat, email at phone.
-
-Kumpara ng Mga Bonus
-Mahalaga ang pagcompare ng welcome bonus, ngunit tandaan na malaking bonus ay hindi palaging nangangahulugang best casino. Basahin ang terms and conditions.
-
-Malawak na Koleksyon ng Laro
-Ang mga casino na may kilalang providers tulad ng Pragmatic Play, NetEnt at Evolution Gaming ay nag-aalok ng pinakamahusay na laro.
-
-Para sa detalyadong review, basahin ang aming comprehensive casino reviews.`,
-      metaDesc: 'Gabay sa pagpili ng mapagkakatiwalaang online casino sa Pilipinas. License verification, security at practical tips.',
-      keywords: ['online casino', 'casino pilipinas', 'mapagkakatiwalaan', 'casino tips'],
-      category: 'Gabay',
-      author: 'Admin',
-      date: '2024-01-15',
-      featured: true,
-      image: '📚'
-    },
-    {
-      id: 2,
-      title: 'Estratehiya sa Slots: Proven Tips Para Manalo sa Online Slot Games',
-      slug: 'estratehiya-slots-online',
-      excerpt: 'Matuto ng epektibong strategy at tips para tumulad sa slot games online.',
-      content: `Ang slot online ay batay sa swerte, ngunit may mga estratehiya na makakatulong na mapataas ang inyong mga pagkakataon.
-
-Maintindihan ang RTP (Return to Player)
-Ang RTP ay ang porsyento ng pera na ibabalik sa mga manlalaro sa long term. Piliin ang slots na may RTP na higit sa 96%.
-
-Pamahalaan ang Inyong Pera
-Magtakda ng araw-araw na badyet at panatilihin ang limitasyong iyon. Huwag mangutang ng higit sa kayang ninyong mawalan.
-
-Gumamit ng Bonus ng Matalino
-Samantalahin ang free spins at deposit bonuses para ma-maximize ang inyong playtime nang walang dagdag na panganib.
-
-Pumili ng Tamang Volatility
-Ang low volatility slots ay nagbabayad ng maliit na premyo nang mas madalas. High volatility slots ay nagbabayad ng malalaking premyo ngunit mas bihira.
-
-Laruin Para sa Kasiyahan
-Tandaan na ang slots ay libangan, hindi paraan para kumita ng pera. Laruin ito para sa kasiyahan.
-
-Para sa listahan ng best slot casinos, basahin ang aming detailed casino reviews.`,
-      metaDesc: 'Estratehiya sa slot games: RTP, bankroll management, at expert tips para manalo.',
-      keywords: ['slot online', 'slot strategy', 'tips manalo', 'RTP slots'],
-      category: 'Estratehiya',
-      author: 'Admin',
-      date: '2024-01-14',
-      featured: true,
-      image: '🎰'
-    },
-    {
-      id: 3,
-      title: 'Mga Bonus Casino: Maximize Ang Inyong Panalo',
-      slug: 'casino-bonus-maximize',
-      excerpt: 'Alamin ang iba\'t ibang uri ng casino bonus at paano gamitin ito ng matalino.',
-      content: `Ang casino bonuses ay magandang paraan para magsimula ng may extra credits. Matuto ng available na bonus types.
-
-Welcome Bonus
-Ibinibigay kapag nag-sign up kayo. Karaniwang percentage of deposit up to maximum amount. Kailangan: umabot sa certain turnover bago makuha ang pera.
-
-Free Spins
-Exclusive bonus para sa slot games. Pwedeng i-convert ang winnings sa real money.
-
-Reload Bonus
-Ibinibigay sa bagong deposits. Mas maliit kaysa welcome bonus pero regular.
-
-Cashback
-Pagbabalik ng percentage ng inyong natalo. Puno-puno ng bonus dahil walang mahigpit na turnover.
-
-VIP Program
-Loyalty program para sa regular players na may exclusive rewards.
-
-Para makita ang detailed bonus breakdown, basahin ang aming comprehensive casino reviews.`,
-      metaDesc: 'Mga uri ng casino bonus sa Pilipinas: welcome bonus, free spins, cashback at VIP programs.',
-      keywords: ['casino bonus', 'welcome bonus', 'free spins', 'turnover'],
-      category: 'Bonus',
-      author: 'Admin',
-      date: '2024-01-13',
-      featured: false,
-      image: '🎁'
-    },
-    {
-      id: 4,
-      title: 'Live Casino: Tunay na Karanasan ng Casino mula sa Bahay',
-      slug: 'live-casino-experience',
-      excerpt: 'Kumpleto gabay sa live casino na may tunay na mga dealer at paano laruin.',
-      content: `Ang live casino ay nag-aalok ng authentic casino experience na may tunay na dealers at real-time interaction.
-
-Ano ang Live Casino?
-Ang live casino ay nagho-host ng live games mula sa studios na may tunay na dealers. Pwede kayong makipag-ugnayan sa dealer at ibang players.
-
-Popular Live Casino Games
-- Live Roulette: Roulette na may tunay na dealer
-- Live Blackjack: Klasikong card game
-- Live Baccarat: Mabilis na card game
-- Live Poker: Laro laban sa ibang players
-- Live Sicbo: Oriental dice game
-
-Benepisyo ng Live Casino
-- Tunay na interaction sa dealers
-- Transparent gameplay
-- Makipag-socialize sa ibang players
-- Mas authentic na karanasan
-
-Tips Para sa Live Casino
-- Panatilihing disciplined sa pera
-- Matuto ng game rules bago maglaro
-- Gumamit ng chat nang responsable
-- Maglaro kapag focused at calm
-
-Para sa best live casinos, tingnan ang aming detailed casino reviews.`,
-      metaDesc: 'Live casino Pilipinas: live dealers, popular games, at strategic tips.',
-      keywords: ['live casino', 'live dealer', 'live roulette', 'live blackjack'],
-      category: 'Gabay',
-      author: 'Admin',
-      date: '2024-01-12',
-      featured: false,
-      image: '🎬'
-    },
-    {
-      id: 5,
-      title: 'Seguridad ng Online Casino: Protektahan ang Inyong Account',
-      slug: 'seguridad-casino-online',
-      excerpt: 'Essential security tips para protektahan ang personal data at casino account.',
-      content: `Ang seguridad ay top priority sa online casino. Sundin ang tips na ito para protektahan ang account.
-
-Gumamit ng Malakas na Password
-Ang password ay dapat may combination ng letters, numbers at symbols na minimum 12 characters. Huwag gamitin ang personal info.
-
-I-enable ang Two-Factor Authentication
-Ang 2FA ay nag-add ng extra security layer. Kailangan ng password at code mula sa authenticator app.
-
-Verify ang Casino License
-Kumpirmahin na may valid license ang casino mula sa regulatory authority. Tingnan ang official website.
-
-Gumamit ng Secure Connection
-Huwag maglaro sa public WiFi. Gamitin ang personal network o VPN.
-
-I-update Regularly ang Software
-Laging update ang operating system, browser at security software. May security patches ang updates.
-
-Iwasan ang Phishing
-Maging ingat sa emails o messages na humihingi ng login data. Ang legitimate casinos ay hindi hihilingin ang password.`,
-      metaDesc: 'Seguridad ng casino online: proteksyon ng data, strong passwords, 2FA at anti-fraud measures.',
-      keywords: ['casino security', 'data protection', 'password', 'authentication'],
-      category: 'Seguridad',
-      author: 'Admin',
-      date: '2024-01-11',
-      featured: false,
-      image: '🔒'
-    }
-  ];
-
-  const categories = [
-    { id: 'lahat', label: 'Lahat ng Casino' },
-    { id: 'premium', label: 'Premium' },
-    { id: 'popular', label: 'Popular' },
-    { id: 'mapagkakatiwalaan', label: 'Mapagkakatiwalaan' }
-  ];
-
-  const filteredCasinos = casinos.filter(casino => {
-    const matchesCategory = selectedCategory === 'lahat' || casino.category === selectedCategory;
-    const matchesSearch = casino.pangalan.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  const visitCasino = (casino) => {
+    if (casino.demo) return;
+    window.open(casino.link, "_blank", "noopener,noreferrer");
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-      {/* Header */}
-      <header className="bg-black/50 backdrop-blur-md border-b border-amber-500/20 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => { setCurrentPage('home'); setSelectedArticle(null); }}>
-              <span className="text-3xl">🎰</span>
-              <h1 className="text-3xl font-bold">Casino Pilipinas</h1>
-            </div>
-            <nav className="flex gap-6">
+    <>
+      <head>
+        <title>
+          Online Casino Philippines - 1WIN, Melbet & Best Casinos 2026
+        </title>
+        <meta
+          name="description"
+          content="Casino Philippines Pro: Ihambing ang 1WIN, Melbet at iba pang online casino para sa Filipino players. Basahin ang casino reviews, bonus guides at gaming articles."
+        />
+        <meta
+          name="keywords"
+          content="online casino philippines, casino philippines, 1win philippines, melbet philippines, best online casino philippines 2026"
+        />
+        <meta
+          property="og:title"
+          content="Online Casino Philippines - 1WIN, Melbet & Best Casinos 2026"
+        />
+        <meta
+          property="og:description"
+          content="Mga casino review, bonus guide at comparison para sa Filipino online casino players."
+        />
+        <meta property="og:url" content="https://casinofilipinas.com/" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://casinofilipinas.com/" />
+      </head>
+
+      <div className="min-h-screen bg-slate-50 text-slate-900">
+        <header className="sticky top-0 z-40 border-b border-blue-100 bg-white/95 backdrop-blur">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-8">
+            <button
+              onClick={() => navigate("home")}
+              className="flex items-center gap-3 text-left"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-900 shadow-lg shadow-blue-200">
+                <Trophy className="text-yellow-300" size={24} />
+              </div>
+              <div>
+                <div className="text-lg font-black tracking-tight text-blue-950">
+                  Casino Philippines Pro
+                </div>
+                <div className="text-xs font-semibold text-blue-600">
+                  casinofilipinas.com
+                </div>
+              </div>
+            </button>
+
+            <nav className="hidden items-center gap-2 md:flex">
               <button
-                onClick={() => { setCurrentPage('home'); setSelectedArticle(null); }}
-                className={`font-medium transition-colors ${currentPage === 'home' ? 'text-amber-400' : 'text-slate-300 hover:text-amber-400'}`}
+                onClick={() => navigate("home")}
+                className={`rounded-lg px-5 py-2.5 text-sm font-bold transition ${
+                  page === "home"
+                    ? "bg-blue-600 text-white"
+                    : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                }`}
               >
-                Tahanan
+                Home
               </button>
               <button
-                onClick={() => { setCurrentPage('blog'); setSelectedArticle(null); }}
-                className={`font-medium transition-colors ${currentPage === 'blog' ? 'text-amber-400' : 'text-slate-300 hover:text-amber-400'}`}
+                onClick={() => navigate("blog")}
+                className={`rounded-lg px-5 py-2.5 text-sm font-bold transition ${
+                  page === "blog" || page === "article"
+                    ? "bg-blue-600 text-white"
+                    : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                }`}
               >
                 Blog
               </button>
             </nav>
-          </div>
-          <p className="text-slate-300">
-            {currentPage === 'home' 
-              ? 'Kumpleto at mapagkakatiwalaang reviews ng online casinos'
-              : 'Gabay, estratehiya at tips para sa online casinos'}
-          </p>
-        </div>
-      </header>
 
-      {/* Home Page */}
-      {currentPage === 'home' && (
-      <>
-      <div className="bg-gradient-to-b from-slate-800 to-slate-900 border-b border-amber-500/20 px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-6">
-            <div className="relative">
-              <Search className="absolute left-4 top-3 w-5 h-5 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Maghanap ng casino..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-slate-700/50 border border-amber-500/30 rounded-lg focus:outline-none focus:border-amber-500 text-white placeholder-slate-400"
-              />
+            <button
+              onClick={() => setMobileMenu(!mobileMenu)}
+              className="rounded-lg p-2 text-blue-900 md:hidden"
+              aria-label="Buksan ang menu"
+            >
+              {mobileMenu ? <X /> : <Menu />}
+            </button>
+          </div>
+
+          {mobileMenu && (
+            <div className="border-t border-blue-100 bg-white p-4 md:hidden">
+              <button
+                onClick={() => navigate("home")}
+                className="flex w-full items-center gap-2 rounded-lg px-4 py-3 font-semibold hover:bg-blue-50"
+              >
+                <Home size={18} />
+                Home
+              </button>
+              <button
+                onClick={() => navigate("blog")}
+                className="flex w-full items-center gap-2 rounded-lg px-4 py-3 font-semibold hover:bg-blue-50"
+              >
+                <BookOpen size={18} />
+                Blog
+              </button>
+            </div>
+          )}
+        </header>
+
+        {page === "home" && (
+          <>
+            <section className="overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-blue-600 text-white">
+              <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 lg:grid-cols-2 lg:px-8 lg:py-24">
+                <div className="flex flex-col justify-center">
+                  <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-yellow-300/30 bg-yellow-300/10 px-4 py-2 text-sm font-bold text-yellow-300">
+                    <Sparkles size={16} />
+                    Updated para sa 2026
+                  </div>
+                  <h1 className="max-w-3xl text-4xl font-black leading-tight tracking-tight md:text-5xl lg:text-6xl">
+                    Pinakamahusay na
+                    <span className="bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-transparent">
+                      {" "}
+                      Online Casino
+                    </span>{" "}
+                    sa Pilipinas
+                  </h1>
+                  <p className="mt-6 max-w-xl text-lg leading-8 text-blue-100">
+                    Ihambing ang aming featured casino platforms, bonus offers,
+                    ratings at mahahalagang impormasyon bago pumili ng online
+                    casino.
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap gap-4">
+                    <button
+                      onClick={() =>
+                        document
+                          .getElementById("casino-list")
+                          ?.scrollIntoView({ behavior: "smooth" })
+                      }
+                      className="rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-3.5 font-black text-blue-950 shadow-lg transition hover:scale-[1.02]"
+                    >
+                      Tingnan ang Rankings
+                    </button>
+                    <button
+                      onClick={() => navigate("blog")}
+                      className="rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur hover:bg-white/20"
+                    >
+                      Basahin ang Blog
+                    </button>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap gap-5 text-sm text-blue-100">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck size={18} className="text-yellow-300" />
+                      Casino comparisons
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <BadgeCheck size={18} className="text-yellow-300" />
+                      Updated reviews
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Globe2 size={18} className="text-yellow-300" />
+                      Para sa Filipino market
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-center">
+                  <div className="w-full max-w-md rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur-xl">
+                    <div className="mb-5 flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-bold text-yellow-300">
+                          #1 Featured Casino
+                        </div>
+                        <div className="mt-1 text-3xl font-black">1WIN</div>
+                      </div>
+                      <div className="rounded-2xl bg-yellow-400 px-4 py-3 text-center text-blue-950">
+                        <div className="text-xs font-black uppercase">Rating</div>
+                        <div className="text-2xl font-black">4.9</div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-blue-500 p-5">
+                      <Gift className="mb-3 text-yellow-300" />
+                      <div className="text-sm font-semibold text-blue-100">
+                        Welcome Offer
+                      </div>
+                      <div className="mt-1 text-3xl font-black text-white">
+                        Hanggang 500%
+                      </div>
+                      <div className="text-sm text-blue-100">
+                        Bonus package sa USD
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => visitCasino(casinos[0])}
+                      className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 py-4 font-black text-blue-950 hover:from-yellow-300 hover:to-yellow-400"
+                    >
+                      Bisitahin ang 1WIN
+                      <ExternalLink size={18} />
+                    </button>
+
+                    <p className="mt-3 text-center text-xs text-blue-200">
+                      Nalalapat ang terms at eligibility requirements.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-800 py-10">
+              <div className="mx-auto max-w-7xl px-4 lg:px-8">
+                <div className="mb-6">
+                  <div className="text-sm font-black uppercase tracking-widest text-yellow-300">
+                    Featured
+                  </div>
+                  <h2 className="mt-1 text-3xl font-black text-white">
+                    Mga Tampok na Casino
+                  </h2>
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-2">
+                  {casinos
+                    .filter((casino) => casino.featured)
+                    .map((casino) => (
+                      <div
+                        key={casino.id}
+                        className="rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <div className="mb-2 inline-flex rounded-full bg-yellow-400 px-3 py-1 text-xs font-black text-blue-950">
+                              {casino.badge}
+                            </div>
+                            <h3 className="text-2xl font-black text-white">
+                              {casino.name}
+                            </h3>
+                            <p className="mt-2 text-sm leading-6 text-blue-100">
+                              {casino.description}
+                            </p>
+                          </div>
+                          <div className="rounded-xl bg-white p-3 text-center">
+                            <div className="text-2xl font-black text-blue-700">
+                              {casino.score}
+                            </div>
+                            <div className="text-xs font-bold text-slate-500">
+                              /100
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="my-5 rounded-xl bg-blue-950/50 p-4">
+                          <div className="flex items-center gap-2 text-yellow-300">
+                            <Gift size={18} />
+                            <span className="font-black">{casino.bonus}</span>
+                          </div>
+                          <div className="mt-1 text-xs text-blue-200">
+                            Currency: {casino.currency}
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => setSelectedCasino(casino)}
+                          className="flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 font-black text-blue-700 hover:bg-blue-50"
+                        >
+                          Tingnan ang Review
+                          <ChevronRight size={18} />
+                        </button>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </section>
+
+            <section
+              id="casino-list"
+              className="mx-auto max-w-7xl px-4 py-16 lg:px-8"
+            >
+              <div className="max-w-3xl">
+                <div className="text-sm font-black uppercase tracking-widest text-blue-600">
+                  Casino Rankings
+                </div>
+                <h2 className="mt-2 text-3xl font-black tracking-tight md:text-4xl">
+                  Top Philippine Online Casino Listings
+                </h2>
+                <p className="mt-4 leading-7 text-slate-600">
+                  Ihambing ang casino ratings, offers at pangunahing features
+                  upang makahanap ng platform na mas angkop sa iyong preference.
+                </p>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-2">
+                {categories.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setCategory(item.id)}
+                    className={`rounded-full px-5 py-2.5 text-sm font-bold transition ${
+                      category === item.id
+                        ? "bg-blue-600 text-white shadow-lg shadow-blue-200"
+                        : "border border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-700"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-8 space-y-5">
+                {filteredCasinos.map((casino, index) => (
+                  <article
+                    key={casino.id}
+                    className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl"
+                  >
+                    <div className="grid lg:grid-cols-[110px_1fr_280px]">
+                      <div className="flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-900 p-6">
+                        <div className="text-center">
+                          <div className="text-xs font-bold text-yellow-300">
+                            RANK
+                          </div>
+                          <div className="text-4xl font-black text-white">
+                            #{index + 1}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <h3 className="text-2xl font-black">{casino.name}</h3>
+                          <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">
+                            {casino.badge}
+                          </span>
+                        </div>
+                        <div className="mt-3">
+                          <StarRating rating={casino.rating} />
+                        </div>
+                        <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-600">
+                          {casino.description}
+                        </p>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {casino.features.slice(0, 3).map((feature) => (
+                            <span
+                              key={feature}
+                              className="flex items-center gap-1 rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600"
+                            >
+                              <BadgeCheck
+                                size={14}
+                                className="text-blue-600"
+                              />
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col justify-center border-t border-slate-100 bg-slate-50 p-6 lg:border-l lg:border-t-0">
+                        <div className="flex items-center gap-2 text-sm font-bold text-blue-600">
+                          <Gift size={18} />
+                          Welcome Offer
+                        </div>
+                        <div className="mt-2 text-2xl font-black">
+                          {casino.bonus}
+                        </div>
+                        <div className="mt-1 text-xs text-slate-500">
+                          Nalalapat ang mga tuntunin.
+                        </div>
+                        <button
+                          onClick={() => setSelectedCasino(casino)}
+                          className="mt-5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-3 font-black text-white hover:from-blue-500 hover:to-blue-700"
+                        >
+                          Buong Review
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="border-y border-blue-100 bg-blue-50 py-14">
+              <div className="mx-auto grid max-w-7xl gap-8 px-4 md:grid-cols-3 lg:px-8">
+                <div>
+                  <ShieldCheck size={32} className="mb-4 text-blue-600" />
+                  <h3 className="text-lg font-black">
+                    Seguridad at Reputasyon
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    Isinasaalang-alang namin ang publicly available operator
+                    information at pangkalahatang reputasyon bago gumawa ng
+                    comparison.
+                  </p>
+                </div>
+                <div>
+                  <CircleDollarSign size={32} className="mb-4 text-blue-600" />
+                  <h3 className="text-lg font-black">Bonus at Promotions</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    Tinitingnan namin ang headline offers kasama ang kahalagahan
+                    ng pagbabasa ng bonus conditions at wagering requirements.
+                  </p>
+                </div>
+                <div>
+                  <Award size={32} className="mb-4 text-blue-600" />
+                  <h3 className="text-lg font-black">Gaming Experience</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    Kasama sa comparison ang mobile usability, game selection at
+                    pangkalahatang player experience.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <BlogPreview openArticle={openArticle} navigate={navigate} />
+          </>
+        )}
+
+        {page === "blog" && <BlogPage openArticle={openArticle} />}
+
+        {page === "article" && selectedArticle && (
+          <ArticlePage
+            article={selectedArticle}
+            onBack={() => navigate("blog")}
+          />
+        )}
+
+        <footer className="bg-slate-950 text-slate-400">
+          <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+            <div className="grid gap-8 md:grid-cols-2">
+              <div>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600">
+                    <Trophy size={21} className="text-yellow-300" />
+                  </div>
+                  <div>
+                    <div className="font-black text-white">
+                      Casino Philippines Pro
+                    </div>
+                    <div className="text-xs text-blue-400">
+                      casinofilipinas.com
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-4 max-w-lg text-sm leading-6">
+                  Casino review at comparison website para sa Filipino market.
+                  Ang impormasyon sa site ay para lamang sa informational at
+                  entertainment purposes.
+                </p>
+              </div>
+
+              <div className="md:text-right">
+                <div className="font-bold text-white">Responsible Gambling</div>
+                <p className="mt-3 text-sm leading-6">
+                  18+ lamang. Ang pagsusugal ay may financial risk at hindi
+                  garantisadong paraan upang kumita. Huwag magsugal ng perang
+                  hindi mo kayang mawala at palaging sundin ang mga batas at
+                  regulasyong naaangkop sa iyong lokasyon.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10 border-t border-slate-800 pt-6 text-xs leading-5">
+              <p>
+                Affiliate disclosure: Maaaring makatanggap ang
+                casinofilipinas.com ng commission kapag bumisita o nag-register
+                ang user sa ilang external websites gamit ang links sa site.
+                Hindi nito dapat baguhin ang halaga na binabayaran ng user.
+              </p>
+              <p className="mt-3">
+                © 2026 Casino Philippines Pro. Lahat ng karapatan ay nakalaan.
+              </p>
             </div>
           </div>
+        </footer>
 
-          <div className="flex gap-3 flex-wrap">
-            {categories.map(cat => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  selectedCategory === cat.id
-                    ? 'bg-amber-500 text-black'
-                    : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+        {selectedCasino && (
+          <CasinoModal
+            casino={selectedCasino}
+            onClose={() => setSelectedCasino(null)}
+            onVisit={visitCasino}
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
+function BlogPreview({ openArticle, navigate }) {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <div className="text-sm font-black uppercase tracking-widest text-blue-600">
+            Casino Philippines Blog
           </div>
+          <h2 className="mt-2 text-3xl font-black md:text-4xl">
+            Mga Gabay para sa Filipino Players
+          </h2>
+        </div>
+
+        <button
+          onClick={() => navigate("blog")}
+          className="flex items-center gap-2 font-bold text-blue-600 hover:text-blue-800"
+        >
+          Lahat ng Artikulo
+          <ChevronRight size={18} />
+        </button>
+      </div>
+
+      <div className="mt-8 grid gap-6 md:grid-cols-3">
+        {articles.map((article) => (
+          <BlogCard
+            key={article.id}
+            article={article}
+            openArticle={openArticle}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function BlogPage({ openArticle }) {
+  return (
+    <main>
+      <section className="bg-gradient-to-r from-blue-950 to-blue-700 text-white">
+        <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+          <div className="text-sm font-black uppercase tracking-widest text-yellow-300">
+            Blog
+          </div>
+          <h1 className="mt-3 text-4xl font-black md:text-5xl">
+            Online Casino Guides sa Pilipinas
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
+            Mga simpleng Tagalog guide tungkol sa casino bonuses, online gaming
+            at pagpili ng casino platform.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-14 lg:px-8">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {articles.map((article) => (
+            <BlogCard
+              key={article.id}
+              article={article}
+              openArticle={openArticle}
+            />
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function BlogCard({ article, openArticle }) {
+  return (
+    <article className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+      <div className="flex h-44 items-center justify-center bg-gradient-to-br from-blue-900 via-blue-700 to-blue-500">
+        <div className="rounded-2xl bg-white/10 p-5 backdrop-blur">
+          <BookOpen size={42} className="text-yellow-300" />
         </div>
       </div>
 
-      {filteredCasinos.length > 0 && (
-        <div className="bg-gradient-to-r from-amber-600 to-amber-700 px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center gap-4">
-              <Award className="w-8 h-8" />
-              <div>
-                <h2 className="text-2xl font-bold">Featured Casino ngayong Buwan</h2>
-                <p className="text-amber-100">{filteredCasinos[0].pangalan}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <main className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCasinos.map(casino => (
-            <div
-              key={casino.id}
-              onClick={() => setSelectedCasino(casino)}
-              className="bg-slate-800/60 backdrop-blur border border-amber-500/20 rounded-xl overflow-hidden hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/20 transition-all cursor-pointer group"
-            >
-              <div className="bg-gradient-to-r from-amber-600 to-amber-700 p-4 flex items-center justify-between">
-                <span className="text-4xl">{casino.image}</span>
-                <div className="flex items-center gap-1 bg-black/50 px-3 py-1 rounded-full">
-                  <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  <span className="font-bold">{casino.rating}</span>
-                </div>
-              </div>
-
-              <div className="p-5">
-                <h3 className="text-xl font-bold mb-1">{casino.pangalan}</h3>
-                <p className="text-slate-400 text-sm mb-4">{casino.reviews} reviews</p>
-
-                <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-3 mb-4">
-                  <p className="text-xs text-slate-300 mb-1">Welcome Bonus</p>
-                  <p className="text-green-400 font-bold">{casino.bonus}</p>
-                </div>
-
-                <div className="mb-4">
-                  <p className="text-xs text-slate-400 mb-2">Highlights:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {casino.features.slice(0, 2).map((feature, idx) => (
-                      <span key={idx} className="text-xs bg-slate-700/50 text-amber-300 px-2 py-1 rounded">
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <button className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 rounded-lg transition-all transform group-hover:scale-105">
-                  Basahin ang Review
-                </button>
-              </div>
-            </div>
-          ))}
+      <div className="flex flex-1 flex-col p-6">
+        <div className="flex items-center gap-2 text-xs font-bold text-blue-600">
+          <span>{article.date}</span>
+          <span>•</span>
+          <span>{article.readTime}</span>
         </div>
 
-        {filteredCasinos.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-slate-400 text-lg">Walang casino na nahanap</p>
-          </div>
-        )}
-      </main>
-      </>
-      )}
+        <h3 className="mt-3 text-xl font-black leading-7">{article.title}</h3>
 
-      {/* Blog Page */}
-      {currentPage === 'blog' && !selectedArticle && (
-      <main className="max-w-6xl mx-auto px-4 py-12">
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Featured Articles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {blogArticles.filter(art => art.featured).map(article => (
-              <article
-                key={article.id}
-                onClick={() => setSelectedArticle(article)}
-                className="bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl overflow-hidden cursor-pointer hover:shadow-2xl hover:shadow-amber-500/30 transition-all group"
-              >
-                <div className="p-6 h-full flex flex-col justify-between">
-                  <div>
-                    <div className="text-5xl mb-4">{article.image}</div>
-                    <h3 className="text-2xl font-bold mb-3 group-hover:text-amber-100 transition-colors">{article.title}</h3>
-                    <p className="text-amber-100 mb-4">{article.excerpt}</p>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-amber-900">
-                    <Calendar className="w-4 h-4" />
-                    <span>{new Date(article.date).toLocaleDateString('en-PH')}</span>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
+          {article.excerpt}
+        </p>
 
-        <section>
-          <h2 className="text-3xl font-bold mb-8">Lahat ng Articles</h2>
-          <div className="space-y-4">
-            {blogArticles.map(article => (
-              <article
-                key={article.id}
-                onClick={() => setSelectedArticle(article)}
-                className="bg-slate-800/60 backdrop-blur border border-amber-500/20 rounded-lg p-6 hover:border-amber-500/50 hover:shadow-lg hover:shadow-amber-500/10 transition-all cursor-pointer group"
-              >
-                <div className="flex gap-6">
-                  <div className="text-4xl">{article.image}</div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-amber-400 transition-colors">{article.title}</h3>
-                    <p className="text-slate-300 mb-4">{article.excerpt}</p>
-                    <div className="flex flex-wrap gap-4 text-sm text-slate-400">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>{new Date(article.date).toLocaleDateString('en-PH')}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Tag className="w-4 h-4" />
-                        <span>{article.category}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <User className="w-4 h-4" />
-                        <span>{article.author}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="hidden sm:flex items-center">
-                    <ArrowRight className="w-6 h-6 text-amber-400 group-hover:translate-x-2 transition-transform" />
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      </main>
-      )}
-
-      {/* Article Detail */}
-      {currentPage === 'blog' && selectedArticle && (
-      <main className="max-w-4xl mx-auto px-4 py-12">
         <button
-          onClick={() => setSelectedArticle(null)}
-          className="mb-8 flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors"
+          onClick={() => openArticle(article)}
+          className="mt-5 flex items-center gap-2 text-sm font-black text-blue-600 hover:text-blue-800"
         >
-          <ArrowRight className="w-4 h-4 rotate-180" />
-          Bumalik sa Blog
+          Basahin ang Artikulo
+          <ChevronRight size={17} />
         </button>
+      </div>
+    </article>
+  );
+}
 
-        <article className="bg-slate-800/60 backdrop-blur border border-amber-500/20 rounded-xl overflow-hidden">
-          <div className="bg-gradient-to-r from-amber-600 to-amber-700 p-8">
-            <div className="text-6xl mb-4">{selectedArticle.image}</div>
-            <h1 className="text-4xl font-bold mb-4">{selectedArticle.title}</h1>
-            <div className="flex flex-wrap gap-6 text-amber-100">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5" />
-                <span>{new Date(selectedArticle.date).toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <User className="w-5 h-5" />
-                <span>{selectedArticle.author}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Tag className="w-5 h-5" />
-                <span>{selectedArticle.category}</span>
-              </div>
+function ArticlePage({ article, onBack }) {
+  return (
+    <>
+      <head>
+        <title>{article.title} | Casino Philippines Pro</title>
+        <meta name="description" content={article.excerpt} />
+      </head>
+
+      <main>
+        <section className="bg-gradient-to-br from-blue-950 to-blue-700 text-white">
+          <div className="mx-auto max-w-4xl px-4 py-16 lg:px-8">
+            <button
+              onClick={onBack}
+              className="mb-8 text-sm font-bold text-blue-200 hover:text-white"
+            >
+              ← Bumalik sa Blog
+            </button>
+
+            <div className="text-sm font-bold text-yellow-300">
+              {article.date} • {article.readTime}
             </div>
+
+            <h1 className="mt-4 text-4xl font-black leading-tight md:text-5xl">
+              {article.title}
+            </h1>
+
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-blue-100">
+              {article.excerpt}
+            </p>
           </div>
+        </section>
 
-          <div className="p-8">
-            <p className="text-lg text-slate-300 mb-8 italic">{selectedArticle.excerpt}</p>
-            
-            <div className="prose prose-invert max-w-none">
-              {selectedArticle.content.split('\n\n').map((paragraph, idx) => (
-                <div key={idx} className="mb-6">
-                  {paragraph.startsWith('-') ? (
-                    <ul className="list-disc list-inside space-y-2">
-                      {paragraph.split('\n').filter(line => line.startsWith('-')).map((item, i) => (
-                        <li key={i} className="text-slate-300">{item.substring(1).trim()}</li>
-                      ))}
-                    </ul>
-                  ) : paragraph.includes(':') && !paragraph.startsWith(' ') ? (
-                    <>
-                      <h3 className="text-xl font-bold text-amber-400 mb-3">{paragraph.split(':')[0]}</h3>
-                      <p className="text-slate-300">{paragraph.split(':')[1]}</p>
-                    </>
-                  ) : (
-                    <p className="text-slate-300 leading-relaxed">{paragraph}</p>
-                  )}
-                </div>
-              ))}
-            </div>
+        <article className="mx-auto max-w-3xl px-4 py-14 lg:px-8">
+          {article.content.map((section, index) => (
+            <section key={index} className="mb-9">
+              <h2 className="text-2xl font-black text-slate-900">
+                {section.heading}
+              </h2>
 
-            <div className="mt-12 pt-8 border-t border-slate-700">
-              <p className="text-slate-400 text-sm mb-3">Keywords: </p>
-              <div className="flex flex-wrap gap-2">
-                {selectedArticle.keywords.map((keyword, idx) => (
-                  <span key={idx} className="bg-slate-700/50 text-amber-300 px-3 py-1 rounded-full text-sm">
-                    {keyword}
-                  </span>
-                ))}
-              </div>
-            </div>
+              <p className="mt-4 text-base leading-8 text-slate-600">
+                {section.text}
+              </p>
+            </section>
+          ))}
 
-            <div className="mt-8 p-4 bg-slate-700/30 rounded-lg border border-slate-700">
-              <p className="text-slate-400 text-sm mb-2">Meta Description (SEO):</p>
-              <p className="text-slate-300 italic">{selectedArticle.metaDesc}</p>
-            </div>
+          <div className="mt-12 rounded-2xl border border-blue-100 bg-blue-50 p-6">
+            <ShieldCheck className="text-blue-600" size={30} />
+
+            <h3 className="mt-3 text-xl font-black">
+              Paalala tungkol sa pagsusugal
+            </h3>
+
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              Ang online gambling ay may financial risk. Magtakda ng budget,
+              huwag habulin ang losses at tiyaking pinapayagan kang gumamit ng
+              online gambling services ayon sa mga regulasyong naaangkop sa
+              iyong lokasyon.
+            </p>
           </div>
         </article>
+      </main>
+    </>
+  );
+}
 
-        <section className="mt-16">
-          <h3 className="text-2xl font-bold mb-8">Related Articles</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {blogArticles
-              .filter(art => art.id !== selectedArticle.id && art.category === selectedArticle.category)
-              .slice(0, 3)
-              .map(article => (
-              <div
-                key={article.id}
-                onClick={() => setSelectedArticle(article)}
-                className="bg-slate-800/60 backdrop-blur border border-amber-500/20 rounded-lg p-4 hover:border-amber-500/50 cursor-pointer transition-all"
-              >
-                <div className="text-4xl mb-3">{article.image}</div>
-                <h4 className="font-bold text-sm mb-2 line-clamp-2 hover:text-amber-400 transition-colors">{article.title}</h4>
-                <p className="text-slate-400 text-xs">{new Date(article.date).toLocaleDateString('en-PH')}</p>
+function CasinoModal({ casino, onClose, onVisit }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-3xl bg-white shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="relative bg-gradient-to-br from-blue-900 to-blue-600 p-7 text-white">
+          <button
+            onClick={onClose}
+            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 hover:bg-white/20"
+            aria-label="Isara"
+          >
+            <X size={20} />
+          </button>
+
+          <div className="inline-flex rounded-full bg-yellow-400 px-3 py-1 text-xs font-black text-blue-950">
+            {casino.badge}
+          </div>
+
+          <h2 className="mt-3 text-4xl font-black">{casino.name}</h2>
+
+          <div className="mt-3">
+            <StarRating rating={casino.rating} />
+          </div>
+        </div>
+
+        <div className="p-7">
+          <div className="rounded-2xl bg-blue-50 p-5">
+            <div className="flex items-center gap-2 font-black text-blue-700">
+              <Gift size={20} />
+              Welcome Offer
+            </div>
+
+            <div className="mt-2 text-3xl font-black">{casino.bonus}</div>
+
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              {casino.bonusDetails}
+            </p>
+          </div>
+
+          <p className="mt-6 leading-7 text-slate-600">{casino.description}</p>
+
+          <h3 className="mt-7 font-black">Pangunahing Features</h3>
+
+          <div className="mt-3 space-y-3">
+            {casino.features.map((feature) => (
+              <div key={feature} className="flex items-center gap-3">
+                <BadgeCheck size={19} className="text-blue-600" />
+                <span className="text-sm font-semibold text-slate-700">
+                  {feature}
+                </span>
               </div>
             ))}
           </div>
-        </section>
-      </main>
-      )}
 
-      {/* Casino Modal */}
-      {selectedCasino && currentPage === 'home' && (
-        <div
-          className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 z-50"
-          onClick={() => setSelectedCasino(null)}
-        >
-          <div
-            className="bg-slate-800 border border-amber-500/30 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="bg-gradient-to-r from-amber-600 to-amber-700 p-6 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <span className="text-5xl">{selectedCasino.image}</span>
-                <div>
-                  <h2 className="text-2xl font-bold">{selectedCasino.pangalan}</h2>
-                  <div className="flex items-center gap-2 mt-2">
-                    <Star className="w-5 h-5 fill-yellow-300 text-yellow-300" />
-                    <span className="font-bold">{selectedCasino.rating}</span>
-                    <span className="text-sm text-amber-100">({selectedCasino.reviews} reviews)</span>
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedCasino(null)}
-                className="text-white hover:text-amber-200 text-2xl font-bold"
-              >
-                ×
-              </button>
+          {!casino.demo ? (
+            <button
+              onClick={() => onVisit(casino)}
+              className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-blue-700 to-blue-900 py-4 font-black text-white shadow-lg shadow-blue-200 hover:from-blue-500 hover:to-blue-800"
+            >
+              Bisitahin ang {casino.name}
+              <ExternalLink size={18} />
+            </button>
+          ) : (
+            <div className="mt-8 rounded-xl bg-slate-100 px-4 py-3 text-center text-sm font-bold text-slate-500">
+              Demo casino listing lamang
             </div>
+          )}
 
-            <div className="p-6 space-y-6">
-              <div>
-                <h3 className="text-lg font-bold text-amber-400 mb-2">Tungkol sa Casino</h3>
-                <p className="text-slate-300">{selectedCasino.description}</p>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-bold text-amber-400 mb-2">Welcome Bonus</h3>
-                <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-4">
-                  <p className="text-green-400 font-bold text-lg">{selectedCasino.bonus}</p>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-bold text-amber-400 mb-3">Highlights</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {selectedCasino.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <Shield className="w-4 h-4 text-green-400" />
-                      <span className="text-slate-300">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-bold text-amber-400 mb-3">Game Providers</h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedCasino.providers.map((provider, idx) => (
-                    <span key={idx} className="bg-slate-700 text-slate-200 px-3 py-1 rounded-full text-sm">
-                      {provider}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-bold py-3 rounded-lg transition-all text-lg">
-                Mag-Sign Up at Kunin ang Bonus
-              </button>
-            </div>
-          </div>
+          <p className="mt-4 text-center text-xs leading-5 text-slate-400">
+            18+ lamang. Nalalapat ang operator terms, eligibility requirements
+            at local regulations.
+          </p>
         </div>
-      )}
-
-      {/* Footer */}
-      <footer className="bg-black/50 border-t border-amber-500/20 mt-16 py-8 px-4">
-        <div className="max-w-6xl mx-auto text-center text-slate-400">
-          <p className="mb-2">© 2024 Casino Pilipinas. Lahat ng karapatan ay nakalaan.</p>
-          <p className="text-sm">Babala: Ang pagsusugal ay maaaring magdulot ng addikson. Maglaro nang may pananagutan.</p>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 }
