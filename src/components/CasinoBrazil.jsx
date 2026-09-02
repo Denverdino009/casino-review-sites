@@ -266,29 +266,7 @@ export default function CasinoBrazil() {
 
   return (
     <>
-      <head>
-        <title>Melhores Cassinos Online Brasil 2026 - 1WIN, Melbet & Plataformas Licenciadas Confiáveis</title>
-        <meta
-          name="description"
-          content="Descubra os melhores cassinos online para jogadores brasileiros em 2026. Compare 1WIN (bônus 500%), Melbet e plataformas licenciadas internacionalmente. Bônus altos, suporte em português 24/7, pagamento via PIX e saques instantâneos."
-        />
-        <meta
-          name="keywords"
-          content="cassino online brasil, cassino brasil, 1win brasil, melbet brasil, melhores cassinos online 2026, slots brasil"
-        />
-        <meta
-          property="og:title"
-          content="Melhores Cassinos Online Brasil 2026 - 1WIN, Melbet & Plataformas Licenciadas Confiáveis"
-        />
-        <meta
-          property="og:description"
-          content="Avaliações de cassinos, comparações, bônus e guias para jogadores brasileiros."
-        />
-        <meta property="og:url" content="https://slotsbrasilieiros.com/" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://slotsbrasilieiros.com/" />
-      </head>
+      
 
       <div className="min-h-screen bg-slate-50 text-slate-900">
         <header className="sticky top-0 z-40 border-b border-green-100 bg-white/95 backdrop-blur">
@@ -881,10 +859,7 @@ function BlogCard({ article, openArticle }) {
 function ArticlePage({ article, onBack }) {
   return (
     <>
-      <head>
-        <title>{article.title} | Slots Brasil Pro</title>
-        <meta name="description" content={article.metaDesc || article.excerpt} />
-      </head>
+      
 
       <main>
         <section className="bg-gradient-to-br from-green-950 to-green-700 text-white">
