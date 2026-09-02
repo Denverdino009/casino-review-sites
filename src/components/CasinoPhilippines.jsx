@@ -266,31 +266,7 @@ export default function CasinoPhilippines() {
 
   return (
     <>
-      <head>
-        <title>
-          Best Online Casinos Philippines 2026 - 1WIN, Melbet & Top Licensed Gaming Sites
-        </title>
-        <meta
-          name="description"
-          content="Find the best online casinos for Filipino players in 2026. Compare 1WIN (500% bonus), Melbet and licensed platforms. High bonuses, GCash/BDO payment, 24/7 English support, and instant withdrawals."
-        />
-        <meta
-          name="keywords"
-          content="online casino philippines, casino philippines, 1win philippines, melbet philippines, best online casino philippines 2026"
-        />
-        <meta
-          property="og:title"
-          content="Best Online Casinos Philippines 2026 - 1WIN, Melbet & Top Licensed Gaming Sites"
-        />
-        <meta
-          property="og:description"
-          content="Compare top online casinos, bonuses, payment options and licensed gaming platforms for Filipino players in 2026."
-        />
-        <meta property="og:url" content="https://casinofilipinas.com/" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://casinofilipinas.com/" />
-      </head>
+      
 
       <div className="min-h-screen bg-slate-50 text-slate-900">
         <header className="sticky top-0 z-40 border-b border-blue-100 bg-white/95 backdrop-blur">
@@ -838,10 +814,7 @@ function BlogCard({ article, openArticle }) {
 function ArticlePage({ article, onBack }) {
   return (
     <>
-      <head>
-        <title>{article.title} | Casino Philippines Pro</title>
-        <meta name="description" content={article.metaDesc || article.excerpt} />
-      </head>
+      
 
       <main>
         <section className="bg-gradient-to-br from-blue-950 to-blue-700 text-white">
