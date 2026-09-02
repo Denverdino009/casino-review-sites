@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   Award,
   BadgeCheck,
@@ -240,6 +240,14 @@ export default function CasinoBrazil() {
   const [selectedCasino, setSelectedCasino] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [mobileMenu, setMobileMenu] = useState(false);
+
+  useEffect(() => {
+    document.title = "Melhores Cassinos Online Brasil 2026 - 1WIN, Melbet & Plataformas Licenciadas";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', "Descubra os melhores cassinos online para jogadores brasileiros. Compare 1WIN, Melbet e plataformas licenciadas. Bônus altos, suporte em português 24/7, PIX, saques instantâneos.");
+    }
+  }, []);
 
   const filteredCasinos = useMemo(() => {
     if (category === "all") return casinos;
