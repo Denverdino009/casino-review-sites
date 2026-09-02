@@ -1,0 +1,11 @@
+# Serve sitemap files
+/sitemap_vietnam.xml  /sitemap_vietnam.xml  200
+/sitemap_indonesia.xml  /sitemap_indonesia.xml  200
+/sitemap_philippines.xml  /sitemap_philippines.xml  200
+/sitemap_brazil.xml  /sitemap_brazil.xml  200
+
+# Redirect www to non-www for all domains
+https://www.duabaotructuyen.com/*  https://duabaotructuyen.com/:splat  301
+https://www.kasinoindonesia.id/*  https://kasinoindonesia.id/:splat  301
+https://www.casinofilipinas.com/*  https://casinofilipinas.com/:splat  301
+https://www.slotsbrasilieiros.com/*  https://slotsbrasilieiros.com/:splat  301
