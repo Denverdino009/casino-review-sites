@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, Shield, Award, Search, Calendar, User, Tag, ArrowRight, Zap } from 'lucide-react';
 
 export default function CasinoIndonesia() {
@@ -7,6 +7,14 @@ export default function CasinoIndonesia() {
   const [selectedCasino, setSelectedCasino] = useState(null);
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedArticle, setSelectedArticle] = useState(null);
+
+  useEffect(() => {
+    document.title = "Kasino Daring Indonesia - Perbandingan 1WIN vs Melbet 2026";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', "Tinjauan kasino daring terbaik Indonesia. Bandingkan 1WIN, Melbet, dan platform berlisensi internasional. Bonus tinggi, pembayaran lokal, dukungan bahasa Indonesia 24/7.");
+    }
+  }, []);
 
   const casinos = [
     {
