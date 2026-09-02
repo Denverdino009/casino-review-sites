@@ -211,14 +211,7 @@ Slot biến động thấp trả các giải thưởng nhỏ thường xuyên. S
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-red-900 to-slate-900 text-white">
       {/* Meta Tags for SEO */}
-      <head>
-        <title>Cược Trực Tuyến Việt Nam 2026 - 1WIN, Melbet & Các Sòng Bạc Uy Tín Hàng Đầu</title>
-        <meta name="description" content="Khám phá những sòng bạc trực tuyến tốt nhất cho người chơi Việt Nam. So sánh 1WIN (thưởng 500%), Melbet và các nền tảng có giấy phép quốc tế. Thưởng cao, hỗ trợ tiếng Việt 24/7, rút tiền nhanh." />
-        <meta name="keywords" content="casino việt nam, 1win, melbet, sòng bạc trực tuyến, cá cược trực tuyến" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:title" content="Casino Trực Tuyến Việt Nam - Đánh Giá & So Sánh 2026" />
-        <meta property="og:description" content="Tìm sòng bạc uy tín với giấy phép quốc tế, thưởng cao, hỗ trợ tiếng Việt." />
-      </head>
+      
 
       {/* Header */}
       <header className="bg-black/50 backdrop-blur-md border-b border-red-600/30 sticky top-0 z-50">
