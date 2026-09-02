@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, Shield, Award, Search, Calendar, User, Tag, ArrowRight, Zap } from 'lucide-react';
 
 export default function CasinoVietnam() {
@@ -7,6 +7,14 @@ export default function CasinoVietnam() {
   const [selectedCasino, setSelectedCasino] = useState(null);
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedArticle, setSelectedArticle] = useState(null);
+
+  useEffect(() => {
+    document.title = "Casino Trực Tuyến Việt Nam - 1WIN, Melbet & Các Sòng Bạc Uy Tín 2026";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', "Khám phá những sòng bạc trực tuyến tốt nhất cho người chơi Việt Nam. So sánh 1WIN, Melbet và các nền tảng có giấy phép quốc tế. Thưởng cao, hỗ trợ tiếng Việt 24/7, rút tiền nhanh.");
+    }
+  }, []);
 
   // Link cloaking function - makes affiliate links look like internal redirects
   const cloakLink = (originalLink, displayText) => {
