@@ -192,14 +192,7 @@ Slot volatilitas rendah membayar hadiah kecil secara teratur. Slot volatilitas t
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-amber-900 to-slate-900 text-white">
-      <head>
-        <title>Kasino Daring Indonesia 2026 - 1WIN, Melbet & Platform Taruhan Terpercaya Terbaik</title>
-        <meta name="description" content="Temukan kasino daring terbaik untuk pemain Indonesia. Bandingkan 1WIN (bonus 500%), Melbet dan platform berlisensi internasional. Bonus tinggi, dukungan bahasa Indonesia 24/7, pembayaran lokal, dan penarikan instan." />
-        <meta name="keywords" content="kasino indonesia, 1win, melbet, taruhan online, kasino daring" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:title" content="Kasino Daring Indonesia - Tinjauan & Perbandingan 2026" />
-        <meta property="og:description" content="Temukan kasino terpercaya dengan lisensi internasional, bonus tinggi, dukungan bahasa Indonesia." />
-      </head>
+      
 
       {/* Header */}
       <header className="bg-black/50 backdrop-blur-md border-b border-amber-600/30 sticky top-0 z-50">
