@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   Award,
   BadgeCheck,
@@ -240,6 +240,14 @@ export default function CasinoPhilippines() {
   const [selectedCasino, setSelectedCasino] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [mobileMenu, setMobileMenu] = useState(false);
+
+  useEffect(() => {
+    document.title = "Best Online Casinos Philippines 2026 - 1WIN, Melbet & Top Licensed Sites";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', "Find the best online casinos for Filipino players. Compare 1WIN, Melbet and licensed platforms. High bonuses, GCash payment, 24/7 English support, instant withdrawals.");
+    }
+  }, []);
 
   const filteredCasinos = useMemo(() => {
     if (category === "all") return casinos;
